@@ -1,0 +1,67 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Noted.Views.MainPage"
+    xmlns:model="clr-namespace:Noted.Models"
+    xmlns:viewmodel="clr-namespace:Noted.ViewModels"
+    x:DataType="viewmodel:NotesViewModel"
+    Title="{Binding Title}"
+    BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource BackgroundAccentDark}}">
+
+    <Grid
+        ColumnDefinitions="*,*"
+        ColumnSpacing="5"
+        RowDefinitions="*,Auto"
+        RowSpacing="0">
+        <RefreshView
+    Grid.ColumnSpan="2"
+    Command="{Binding GetNotesCommand}"
+    IsRefreshing="{Binding IsRefreshing}">
+            <ContentView>
+                <CollectionView ItemsSource="{Binding Notes}"
+                         SelectionMode="None"
+                         Grid.ColumnSpan="2">
+                    <CollectionView.EmptyView>
+                        <StackLayout Padding="100">
+                            <Image
+                HorizontalOptions="Center"
+                Source="nodata.png"
+                HeightRequest="160"
+                WidthRequest="160"
+                VerticalOptions="Center" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Note">
+                            <Grid Padding="10">
+                                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SecondaryAccentDark}}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotesViewModel}}, Path=GoToDetailsCommand}"
+                        CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid Padding="0" ColumnDefinitions="*">
+                                        <VerticalStackLayout
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        Padding="10">
+                                            <Label Text="{Binding Title}" FontSize="25" TextColor="{AppThemeBinding Light=Blue, Dark={StaticResource TextAccentDark}}"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ContentView>
+        </RefreshView>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           Color="{AppThemeBinding Light=Blue, Dark=White}"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2"/>
+    </Grid>
+</ContentPage>

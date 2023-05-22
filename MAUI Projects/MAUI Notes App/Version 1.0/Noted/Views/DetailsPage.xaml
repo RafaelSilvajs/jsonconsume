@@ -1,0 +1,28 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Noted.Views.DetailsPage"
+    xmlns:viewmodel="clr-namespace:Noted.ViewModels"
+    x:DataType="viewmodel:DetailViewModel"
+    Title="{Binding Note.Title}">
+
+    <Grid RowDefinitions="Auto,Auto,Auto">
+        <Frame Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SecondaryAccentDark}}">
+
+            <Label Text="{Binding Note.Title}" FontSize="25" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=Blue, Dark={StaticResource TextAccentDark}}" Padding="10"></Label>
+
+        </Frame>
+        <ScrollView Grid.Row="1" HeightRequest="500">
+            <Grid>
+                <Label Text="{Binding Note.Content}" FontSize="20" HorizontalTextAlignment ="Center" VerticalTextAlignment="Center" Padding="15" TextColor="{AppThemeBinding Light=Gray, Dark={StaticResource TextAccentDark}}"></Label>
+            </Grid>
+        </ScrollView>
+        <Grid Grid.Row="2"
+        Padding="10"
+        ColumnDefinitions="*,*"
+        RowDefinitions="*,Auto">
+            <Button Text="Edit Note" TextColor="{AppThemeBinding Light=White, Dark={StaticResource TextAccentDark}}" BackgroundColor="{AppThemeBinding Light=Blue, Dark={StaticResource SecondaryAccentDark}}" Grid.Column="0" Margin="8"></Button>
+            <Button Text="Delete Note" TextColor="{AppThemeBinding Light=White, Dark={StaticResource TextAccentDark}}" BackgroundColor="{AppThemeBinding Light=Blue, Dark={StaticResource SecondaryAccentDark}}" Grid.Column="1" Margin="8"></Button>
+        </Grid>
+    </Grid>
+</ContentPage>  
